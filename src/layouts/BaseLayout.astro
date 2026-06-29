@@ -4,19 +4,108 @@ import '../styles/global.scss';
 
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = 'HIGASHIYAMA SHIN-EI | Kaiseki Restaurant in Kanazawa Higashi Chaya',
+  description = "Higashiyama Shin-ei is a kaiseki restaurant in Kanazawa's historic Higashi Chaya District, serving omakase course cuisine with seasonal Hokuriku ingredients inside a renovated 100-year-old townhouse. Reservations only.",
+  image = '/ogp.png',
+  type = 'website',
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://higashiyama-shin-ei.pages.dev/');
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const socialImageURL = new URL(image, siteUrl);
+const siteName = 'HIGASHIYAMA SHIN-EI';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: siteName,
+  description,
+  url: siteUrl.href,
+  image: socialImageURL.href,
+  telephone: '+81-76-255-2439',
+  servesCuisine: ['Kaiseki', 'Japanese'],
+  priceRange: '¥¥¥¥',
+  currenciesAccepted: 'JPY',
+  acceptsReservations: 'https://savorjapan.com/0031595716',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '1-12-4 Higashiyama',
+    addressLocality: 'Kanazawa',
+    addressRegion: 'Ishikawa',
+    postalCode: '920-0831',
+    addressCountry: 'JP',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 36.5730852,
+    longitude: 136.667091,
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
+      opens: '18:30',
+      closes: '22:00',
+    },
+  ],
+  sameAs: ['https://www.instagram.com/kanazawa.shinn_ei/'],
+};
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>HIGASHIYAMA-SHIN-ei-</title>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#111111" />
+
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImageURL} />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" rel="stylesheet" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <Header />
