@@ -1,10 +1,422 @@
 ---
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+
+import Logo from '../assets/images/logo.png';
 ---
 
 <header class="header">
-
+  <div class="header-inner">
+    <div class="header-top">
+      <h1 class="header-logo">
+        <a href="/" class="header-logo-link">
+          <Image class="header-logo-img" src={ Logo } alt="Higashiyama-shin-ei" />
+        </a>
+      </h1>
+      <div class="header-actions">
+        <a class="header-tel-link btn" href="tel:0762552439">
+          <Icon class="header-tel-icon" name="bi:telephone" />
+          <span class="header-tel-number">076-255-2439</span>
+        </a>
+        <a class="header-reserve-link btn" href="https://savorjapan.com/0031595716" target="_blank">
+          <Icon class="header-reserve-icon" name="bi:calendar-check" />
+          <span class="header-reserve-label">Reserve</span>
+        </a>
+        <small class="header-business-hours">
+          [Business Hours] 18:30 〜 22:00
+          <br />
+          [Regular Holiday] Irregular Holidays
+        </small>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <ul class="header-nav-list">
+        <li class="header-nav-item">
+          <a href="#about" class="header-nav-link">About</a>
+        </li>
+        <li class="header-nav-item">
+          <a href="#course" class="header-nav-link">Course</a>
+        </li>
+        <li class="header-nav-item">
+          <a href="#info" class="header-nav-link">Info</a>
+        </li>
+        <li class="header-nav-item">
+          <a href="#access" class="header-nav-link">Access</a>
+        </li>
+        <li class="header-nav-item">
+          <a href="#contact" class="header-nav-link">Contact</a>
+        </li>
+      </ul>
+    </nav>
+    <!-- スマホ表示 -->
+    <div class="header-actions-sp">
+      <a class="header-tel-link btn sp" href="tel:0762552439">
+        <Icon class="header-tel-icon sp" name="bi:telephone" />
+        <span class="header-tel-number sp">076-255-2439</span>
+      </a>
+      <a class="header-reserve-link btn sp" href="https://savorjapan.com/0031595716" target="_blank">
+        <Icon class="header-reserve-icon sp" name="bi:calendar-check" />
+        <span class="header-reserve-label sp">Reserve</span>
+      </a>
+      <small class="header-business-hours sp">
+        [Business Hours] 18:30 〜 22:00
+        <br />
+        [Regular Holiday] Irregular Holidays
+      </small>
+    </div>
+  </div>
 </header>
 
+<!-- SP用：固定ハンバーガー -->
+<div class="header-fixed-bar">
+  <button
+    type="button"
+    class="hamburger"
+    aria-expanded="false"
+    aria-controls="sp-menu"
+    aria-label="メニューを開く"
+  >
+    <span class="hamburger-line"></span>
+    <span class="hamburger-line"></span>
+  </button>
+</div>
+<!-- SP用：メニュー本体 -->
+<div class="sp-menu-overlay" aria-hidden="true"></div>
+<nav class="sp-menu" id="sp-menu" aria-hidden="true">
+  <ul class="sp-menu-list">
+    <li class="sp-menu-item"><a href="#about" class="sp-menu-link">About</a></li>
+    <li class="sp-menu-item"><a href="#course" class="sp-menu-link">Course</a></li>
+    <li class="sp-menu-item"><a href="#info" class="sp-menu-link">Info</a></li>
+    <li class="sp-menu-item"><a href="#access" class="sp-menu-link">Access</a></li>
+    <li class="sp-menu-item"><a href="#contact" class="sp-menu-link">Contact</a></li>
+  </ul>
+  <!-- 任意：TEL / reserve もメニュー内に -->
+  <div class="sp-menu-actions">
+    <a class="sp-menu-tel-link btn" href="tel:0762552439">
+      <Icon class="sp-menu-tel-icon" name="bi:telephone" />
+      <span class="sp-menu-tel-number">076-255-2439</span>
+    </a>
+    <a class="sp-menu-reserve-link btn" href="https://savorjapan.com/0031595716" target="_blank">
+      <Icon class="sp-menu-reserve-icon" name="bi:calendar-check" />
+      <span class="sp-menu-reserve-label">Reserve</span>
+    </a>
+    <small class="sp-menu-business-hours">
+      [Business Hours] 18:30 〜 22:00
+      <br />
+      [Regular Holiday] Irregular Holidays
+    </small>
+  </div>
+
+  <div class="sp-menu-footer">
+    <a href="/" class="sp-menu-logo-link">
+      <Image class="sp-menu-logo-img" src={Logo} alt="Higashiyama-shin-ei" />
+    </a>
+  </div>
+</nav>
+
 <style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 4.5%;
+    color: #ffffff;
+    z-index: 100;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+      pointer-events: none;
+    }
+  }
+
+  .header-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100dvh - 40px);
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+  }
+
+  .header-logo {
+    z-index: 100;
+  }
+
+  .header-logo-link {
+
+  }
+
+  .header-logo-img {
+    max-width: 100px;
+  }
+
+  .header-actions,
+  .header-actions-sp {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  .header-actions {
+    display: flex;
+  }
+
+  .header-actions-sp {
+    display: none;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ffffff;
+    gap: 8px;
+    padding: 10px 16px;
+    line-height: 1;
+  }
+
+  .header-tel-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-tel-icon,
+  .header-reserve-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .header-business-hours {
+    font-size: clamp(0.625rem, 2vw, 0.75rem);
+    line-height: 1.6;
+    text-align: right;
+  }
+
+  .header-nav {
+    z-index: 100;
+  }
+
+  .header-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .header-nav-item {
+
+  }
+
+  .header-nav-link {
+    
+  }
+
+  .header-fixed-bar,
+  .sp-menu,
+  .sp-menu-overlay {
+    display: none;
+  }
+
+  @include sp {
+    .header-nav {
+      display: none;
+    }
+
+    .header-actions {
+      display: none;
+    }
+
+    .header-actions-sp {
+      display: flex;
+      align-self: flex-end;
+      align-items: stretch;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .header-business-hours {
+      text-align: right;
+    }
+
+    .header-fixed-bar {
+      position: fixed;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 16px 4.5%;
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 40px;
+      height: 14px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      pointer-events: auto;
+      z-index: 201;
+    }
+
+    .hamburger-line {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background-color: #ffffff;
+      transition: transform 0.3s, opacity 0.3s;
+      z-index: 100;
+    }
+
+    // 開いたとき × に変形（2本線）
+    .hamburger.is-open .hamburger-line:nth-child(1) {
+      transform: translateY(6px) rotate(20deg);
+    }
+    .hamburger.is-open .hamburger-line:nth-child(2) {
+      transform: translateY(-6px) rotate(-20deg);
+    }
+
+    .sp-menu-overlay {
+      position: fixed;
+      display: block;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 150;
+
+      &.is-open {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    .sp-menu {
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      inset: 0;
+      padding: 72px 4.5% 24px;
+      background-color: #111111;
+      color: #ffffff;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      z-index: 160;
+      overflow-y: auto;
+      &.is-open {
+        transform: translateX(0);
+      }
+    }
+
+    .sp-menu-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      align-self: center; 
+      max-width: 100%;
+      width: fit-content;
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .sp-menu-list {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      gap: 28px;
+    }
+
+    .sp-menu-link {
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+    }
+
+    .sp-menu-tel-link,
+    .sp-menu-reserve-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sp-menu-tel-icon,
+    .sp-menu-reserve-icon {
+      width: 15px;
+      height: 15px;
+    }
+
+    .sp-menu-business-hours {
+      font-size: clamp(0.625rem, 2vw, 0.75rem);
+      line-height: 1.6;
+    }
+
+    .sp-menu-footer {
+      display: flex;
+      justify-content: center;
+      margin-top: auto;
+      padding-top: 48px;
+    }
+    
+    .sp-menu-logo-img {
+      display: block;
+      width: 64px;
+      max-width: 64px;
+    }
+  }
+
 
 </style>
+
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const menu = document.querySelector('.sp-menu');
+  const overlay = document.querySelector('.sp-menu-overlay');
+  const menuLinks = document.querySelectorAll('.sp-menu-link, .sp-menu-tel-link, .sp-menu-reserve-link');
+
+  const closeMenu = () => {
+    hamburger?.classList.remove('is-open');
+    menu?.classList.remove('is-open');
+    overlay?.classList.remove('is-open');
+    hamburger?.setAttribute('aria-expanded', 'false');
+    menu?.setAttribute('aria-hidden', 'true');
+    overlay?.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  const openMenu = () => {
+    hamburger?.classList.add('is-open');
+    menu?.classList.add('is-open');
+    overlay?.classList.add('is-open');
+    hamburger?.setAttribute('aria-expanded', 'true');
+    menu?.setAttribute('aria-hidden', 'false');
+    overlay?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  hamburger?.addEventListener('click', () => {
+    hamburger.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+
+  overlay?.addEventListener('click', closeMenu);
+  menuLinks.forEach((link) => link.addEventListener('click', closeMenu));
+</script>

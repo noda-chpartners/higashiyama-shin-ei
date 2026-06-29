@@ -1,10 +1,179 @@
 ---
+import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+
+import Logo from '../assets/images/logo.png';
 ---
 
 <footer class="footer">
-
+  <div class="footer-inner">
+    <a href="/" class="footer-logo-link">
+      <Image class="footer-logo-img" src={ Logo } alt="higashiyama-shin-ei" />
+    </a>
+    <div class="company-wrap">
+      <address class="company-contact-info">
+        <p class="company-name">HIGASHIYAMA-SHIN-EI</p>
+        <div class="company-address">
+          1-12-4 Higashiyama, Kanazawa City, Ishikawa
+          <br />
+          Prefecture 920-0831
+        </div>
+        <div class="company-tel-wrap">
+          <a class="company-tel-link" href="tel:0762552439">
+            <Icon class="company-tel-icon" name="bi:telephone" />
+            <p class="company-tel-number">076-255-2439</p>
+          </a>
+          <small class="company-business-hours">
+            [Business Hours] 18:30 〜 22:00
+            <br />
+            [Regular Holiday] Irregular Holidays
+          </small>
+        </div>
+        <div class="company-sns-wrap">
+          <a href="" class="company-sns-link">
+            <Icon class="company-sns-icon" name="simple-icons:instagram" />
+            <p class="company-sns-label">Instagram</p>
+          </a>
+        </div>
+      </address>
+    </div>
+    <div class="footer-map">
+      <iframe
+        class="footer-map-iframe"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3204.2129763153207!2d136.667091!3d36.5730852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff83374aa21b70b%3A0x68b955e9c55159c4!2z44CSOTIwLTA4MzEg55-z5bed55yM6YeR5rKi5biC5p2x5bGx77yR5LiB55uu77yR77yS4oiS77yU!5e0!3m2!1sja!2sjp!4v1782715744008!5m2!1sja!2sjp"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+        title="HIGASHIYAMA-SHIN-EI map"
+      ></iframe>
+    </div>
+  </div>
+  <small class="copyright">&copy; 2026 HIGASHIYAMA-SHIN-EI</small>
 </footer>
 
 <style lang="scss">
-  
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+
+  .footer {
+    padding: 20px 4.5%;
+    background-color: #111111;
+    color: #ffffff;
+  }
+
+  .footer-inner {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-logo-link {
+
+  }
+
+  .footer-logo-img {
+    max-width: 100px;
+  }
+
+  .footer .company-wrap {
+
+  }
+
+  .footer .company-name {
+
+  }
+
+  .footer .company-contact-info {
+
+  }
+
+  .company-address {
+
+  }
+
+  .company-tel-wrap {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .company-tel-link {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 8px;
+  }
+
+  .company-tel-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .company-tel-number {
+
+  }
+
+  .company-sns-wrap {
+    margin-top: 20px;
+  }
+
+  .company-sns-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .company-sns-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .company-sns-label {
+
+  }
+
+  .footer-map {
+    flex: 1;
+    max-width: 400px;
+    min-width: 0;
+    margin-left: auto;
+  }
+
+  .footer-map-iframe {
+    display: block;
+    width: 100%;
+    height: 200px;
+  }
+
+  .copyright {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #ffffff;
+    margin-top: 20px;
+    padding-top: 10px;
+    font-size: clamp(0.5rem, 2vw, 0.6rem);
+  }
+
+  @include tab {
+    .footer-inner {
+      display: block;
+    }
+
+    .footer-logo-link {
+      display: flex;
+      justify-content: center;
+    }
+
+    .company-wrap {
+      margin-top: 24px;
+    }
+
+    .company-address {
+      margin-top: 10px;
+    }
+
+    .footer-map {
+      max-width: none;
+      margin-top: 24px;
+    }
+  }
 </style>
