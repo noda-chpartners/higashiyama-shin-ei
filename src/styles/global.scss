@@ -8,6 +8,7 @@ body {
   color: #272727;
   line-height: 1.5;
   overflow-x: clip;
+  background-color: #111111;
 }
 
 img {
@@ -19,6 +20,50 @@ a {
   cursor: pointer;
 }
 
+main {
+  position: relative;
+  color: #ffffff;
+}
+
 .section {
-  padding: 20px 4.5%;
+  padding: 80px 4.5%;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.section-title .title {
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+/* スクロールリビール（IntersectionObserver で .is-revealed を付与） */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

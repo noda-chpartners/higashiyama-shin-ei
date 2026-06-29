@@ -1,13 +1,70 @@
 ---
 ---
 
-<section class="section" id="about">
-  <div class="section-title">
+<section class="section about" id="about">
+  <div class="section-title reveal">
     <h2 class="title">About</h2>
+  </div>
+  <div class="about-body reveal" style="--reveal-delay: 0.12s">
+    <p class="about-lead">
+      A Quiet Japanese Culinary Experience in Kanazawa's Higashi Chaya District
+    </p>
+    <div class="about-text">
+      <p class="about-paragraph">
+        Higashiyama Shin-ei is a Japanese restaurant located in the Higashi Chaya
+        District, one of Kanazawa's most iconic historic neighborhoods.
+      </p>
+      <p class="about-paragraph">
+        Housed in a renovated traditional townhouse over 100 years old, we offer a
+        tranquil atmosphere where we take pride in providing attentive and thoughtful
+        hospitality to each guest.
+      </p>
+      <p class="about-paragraph">
+        Rather than just a meal stop during your sightseeing, we invite you to enjoy a
+        special moment that will remain a memorable part of your stay in Kanazawa.
+      </p>
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .about-body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding-top: 40px;
+  }
+
+  .about-lead {
+    font-size: clamp(1.125rem, 3vw, 1.5rem);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .about-paragraph {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 2;
+    text-wrap: pretty;
+  }
+
+  @include sp {
+    .about-body {
+      padding-top: 24px;
+    }
+
+    .about-lead {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+  }
 </style>

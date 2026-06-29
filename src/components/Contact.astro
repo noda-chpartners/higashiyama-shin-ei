@@ -1,13 +1,93 @@
 ---
+import { Icon } from 'astro-icon/components';
 ---
 
-<section class="section" id="contact">
-  <div class="section-title">
+<section class="section contact" id="contact">
+  <div class="section-title reveal">
     <h2 class="title">Contact</h2>
-   </div>
+  </div>
+  <div class="contact-body reveal" style="--reveal-delay: 0.12s">
+    <p class="contact-lead">
+      For inquiries and reservations, please feel free to contact us by phone or through
+      Instagram.
+    </p>
+    <div class="contact-actions">
+      <a class="contact-link btn" href="tel:0762552439">
+        <Icon class="contact-icon" name="bi:telephone" />
+        <span>076-255-2439</span>
+      </a>
+      <a class="contact-link btn" href="https://www.instagram.com/kanazawa.shinn_ei/" target="_blank" rel="noopener">
+        <Icon class="contact-icon" name="simple-icons:instagram" />
+        <span>Instagram</span>
+      </a>
+    </div>
+  </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .contact-body {
+    max-width: 640px;
+    margin: 0 auto;
+    padding-top: 40px;
+  }
+
+  .contact-lead {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 2;
+    margin-bottom: 32px;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .contact-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 200px;
+    padding: 12px 32px;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    line-height: 1;
+    transition:
+      background-color 0.25s,
+      color 0.25s,
+      transform 0.25s ease;
+
+    &:hover {
+      background-color: #ffffff;
+      color: #111111;
+      transform: translateY(-2px);
+    }
+  }
+
+  .contact-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  @include sp {
+    .contact-body {
+      padding-top: 24px;
+    }
+
+    .contact-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn {
+      min-width: 0;
+    }
+  }
 </style>

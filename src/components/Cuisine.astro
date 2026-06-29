@@ -1,13 +1,71 @@
 ---
 ---
 
-<section class="section" id="access">
-  <div class="section-title">
+<section class="section cuisine" id="cuisine">
+  <div class="section-title reveal">
     <h2 class="title">Cuisine</h2>
-   </div>
+  </div>
+  <div class="cuisine-body reveal" style="--reveal-delay: 0.12s">
+    <p class="cuisine-lead">
+      Kaiseki Cuisine Featuring Seasonal Flavors of the Hokuriku Region
+    </p>
+    <div class="cuisine-text">
+      <p class="cuisine-paragraph">
+        At Higashiyama Shin-ei, we serve omakase kaiseki cuisine curated daily based on
+        the ingredients of the season.
+      </p>
+      <p class="cuisine-paragraph">
+        Using fresh seafood from Noto and other seasonal delicacies nurtured by the rich
+        environment of the Hokuriku region, we prepare each dish with meticulous
+        preparation and the techniques of traditional Japanese culinary arts.
+      </p>
+      <p class="cuisine-paragraph">
+        We value bringing out the inherent flavors of our ingredients. Rather than relying
+        on extravagant presentation, we express the transition of the seasons through the
+        depth of our dashi, delicate aromas, and the lingering finish of each dish.
+      </p>
+    </div>
+  </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .cuisine-body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding-top: 40px;
+  }
+
+  .cuisine-lead {
+    font-size: clamp(1.125rem, 3vw, 1.5rem);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .cuisine-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cuisine-paragraph {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 2;
+    text-wrap: pretty;
+  }
+
+  @include sp {
+    .cuisine-body {
+      padding-top: 24px;
+    }
+
+    .cuisine-lead {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+  }
 </style>

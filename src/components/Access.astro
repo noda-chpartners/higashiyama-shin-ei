@@ -1,13 +1,109 @@
 ---
 ---
 
-<section class="section" id="access">
-  <div class="section-title">
+<section class="section access" id="access">
+  <div class="section-title reveal">
     <h2 class="title">Access</h2>
-   </div>
+  </div>
+  <div class="access-body reveal" style="--reveal-delay: 0.12s">
+    <div class="access-info">
+      <p class="access-name">HIGASHIYAMA-SHIN-EI</p>
+      <p class="access-address">
+        1-12-4 Higashiyama, Kanazawa City, Ishikawa
+        <br />
+        Prefecture 920-0831
+      </p>
+      <a class="access-tel" href="tel:0762552439">076-255-2439</a>
+    </div>
+    <div class="access-map">
+      <iframe
+        class="access-map-iframe"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3204.2129763153207!2d136.667091!3d36.5730852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff83374aa21b70b%3A0x68b955e9c55159c4!2z44CSOTIwLTA4MzEg55-z5bed55yM6YeR5rKi5biC5p2x5bGx77yR5LiB55uu77yR77yS4oiS77yU!5e0!3m2!1sja!2sjp!4v1782715744008!5m2!1sja!2sjp"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+        title="HIGASHIYAMA-SHIN-EI map"></iframe>
+    </div>
+  </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
+
+  .access-body {
+    display: flex;
+    gap: 40px;
+    align-items: stretch;
+    padding-top: 40px;
+  }
+
+  .access-info {
+    flex-shrink: 0;
+    width: 280px;
+  }
+
+  .access-name {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+  }
+
+  .access-address {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  .access-tel {
+    position: relative;
+    display: inline-block;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+
+  .access-tel::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.35s ease;
+  }
+
+  .access-tel:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .access-map {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .access-map-iframe {
+    display: block;
+    width: 100%;
+    height: 360px;
+    border: 0;
+  }
+
+  @include tab {
+    .access-body {
+      flex-direction: column;
+      gap: 24px;
+      padding-top: 24px;
+    }
+
+    .access-info {
+      width: auto;
+    }
+
+    .access-map-iframe {
+      height: 280px;
+    }
+  }
 </style>
