@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 
 import menu01 from '../assets/images/menu01.jpg';
 import menu02 from '../assets/images/menu02.jpg';
@@ -12,17 +13,51 @@ import menu08 from '../assets/images/menu08.jpg';
 import menu09 from '../assets/images/menu09.jpg';
 import menu010 from '../assets/images/menu010.jpg';
 
+const menu = [
+  {
+    name: 'Oshino-gi',
+    description:
+      'A delicate first course in the traditional Kaiseki style, gently prepared to ease the appetite.',
+  },
+  {
+    name: 'Mukō-zuke (Sashimi)',
+    description:
+      'Delicately prepared sashimi, carefully aged to bring out its natural umami.',
+  },
+  {
+    name: 'Suimono (Clear Soup)',
+    description:
+      'A fragrant, crystal-clear soup made with naturally spring-sourced soft water.',
+  },
+  {
+    name: 'Hokuriku Sea Crab from the Sea of Japan',
+    description:
+      "Steamed after being expertly nerve-killed, preserving the crab's natural flavor and delicate juiciness.",
+  },
+  {
+    name: 'Donabe Rice',
+    description:
+      'Noto organic Koshihikari rice, cooked to perfection in a traditional clay pot over high heat.',
+  },
+];
+
 const dishes = [
-  { src: menu01, alt: 'Course dish 1' },
-  { src: menu02, alt: 'Course dish 2' },
-  { src: menu03, alt: 'Course dish 3' },
-  { src: menu04, alt: 'Course dish 4' },
-  { src: menu05, alt: 'Course dish 5' },
-  { src: menu06, alt: 'Course dish 6' },
-  { src: menu07, alt: 'Course dish 7' },
-  { src: menu08, alt: 'Course dish 8' },
-  { src: menu09, alt: 'Course dish 9' },
-  { src: menu010, alt: 'Course dish 10' },
+  { src: menu01, alt: 'A finely prepared opening dish on a phoenix-patterned plate' },
+  { src: menu02, alt: 'Salmon roe served in a patterned bowl' },
+  { src: menu03, alt: 'Steamed Hokuriku sea crab' },
+  { src: menu04, alt: 'A clear soup with seafood and delicate garnishes' },
+  { src: menu05, alt: 'A black lacquer soup bowl with gold floral decoration' },
+  { src: menu06, alt: 'Crab served in a celadon bowl' },
+  { src: menu07, alt: 'Pale seafood slices in a leaf-shaped bowl' },
+  { src: menu08, alt: 'Seafood and seasonal vegetables in broth' },
+  { src: menu09, alt: 'Sashimi dressed with green herbs in a blue patterned bowl' },
+  { src: menu010, alt: 'A small grilled fish in a ceramic bowl' },
+];
+
+const reservationLinks = [
+  { label: 'SAVOR JAPAN', href: 'https://savorjapan.com/0031595716' },
+  { label: 'Pocket Concierge', href: 'https://www.pocket-concierge.jp/en/restaurants/245598' },
+  { label: 'Japan Food Guide', href: 'https://japan-food.guide/restaurants/2234' },
 ];
 ---
 
@@ -37,74 +72,79 @@ const dishes = [
       <p class="course-paragraph">Starting with seafood delivered from Noto, we carefully craft each dish, paying close attention to dashi broth, aroma, presentation, and the lingering aftertaste of the seasonal flavors of the Hokuriku region.</p>
       <p class="course-paragraph">As our menu is not fixed and is instead curated based on the season and our daily market selection, you can enjoy a different culinary experience each time you visit.</p>
     </div>
-  </div>
-  <ul class="course-gallery">
-    {
-      dishes.map((dish) => (
-        <li class="course-gallery-item">
-          <Image class="course-gallery-img" src={dish.src} alt={dish.alt} />
-        </li>
-      ))
-    }
-  </ul>
-  <script>
-    const items = Array.from(
-      document.querySelectorAll<HTMLElement>('.course-gallery-item')
-    );
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    items.forEach((item, index) => {
-      item.style.transitionDelay = `${(index % 5) * 0.08}s`;
-      observer.observe(item);
-    });
-
-    const images = Array.from(
-      document.querySelectorAll<HTMLElement>('.course-gallery-img')
-    );
-
-    let ticking = false;
-
-    const updateParallax = () => {
-      const viewportHeight = window.innerHeight;
-      images.forEach((image, index) => {
-        const rect = image.getBoundingClientRect();
-        const center = rect.top + rect.height / 2;
-        const progress = (center - viewportHeight / 2) / viewportHeight;
-        const direction = index % 2 === 0 ? 1 : -1;
-        const offset = progress * 28 * direction;
-        image.style.transform = `translate3d(0, ${offset}px, 0) scale(1.12)`;
-      });
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateParallax);
-        ticking = true;
+    <ol class="course-menu">
+      {
+        menu.map((item) => (
+          <li class="course-menu-item">
+            <h3 class="course-menu-name">{item.name}</h3>
+            <p class="course-menu-desc">{item.description}</p>
+          </li>
+        ))
       }
-    };
+    </ol>
+  </div>
 
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+  <div
+    class="course-slider reveal"
+    style="--reveal-delay: 0.18s"
+    data-course-slider
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Photographs of course dishes"
+  >
+    <div class="course-slider-viewport" data-viewport>
+      <div class="course-slider-track" data-track>
+        {
+          dishes.map((dish, index) => (
+            <div class="course-slider-slide" data-slide data-alt={dish.alt} aria-hidden={index === 0 ? 'false' : 'true'}>
+              <Image
+                class="course-slider-img"
+                src={dish.src}
+                alt={dish.alt}
+                widths={[640, 960, 1400]}
+                sizes="(max-width: 768px) 91vw, 960px"
+                loading={index === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          ))
+        }
+      </div>
+      <button class="course-slider-btn course-slider-btn-prev" type="button" data-prev aria-label="Previous photograph">
+        <Icon name="bi:chevron-left" />
+      </button>
+      <button class="course-slider-btn course-slider-btn-next" type="button" data-next aria-label="Next photograph">
+        <Icon name="bi:chevron-right" />
+      </button>
+    </div>
+    <div class="course-slider-controls">
+      <p class="course-slider-count" data-count aria-hidden="true">01 / {String(dishes.length).padStart(2, '0')}</p>
+      <div class="course-slider-dots">
+        {
+          dishes.map((dish, index) => (
+            <button
+              class="course-slider-dot"
+              type="button"
+              data-dot
+              aria-label={`Show photograph ${index + 1}: ${dish.alt}`}
+              aria-current={index === 0 ? 'true' : undefined}
+            />
+          ))
+        }
+      </div>
+      <button class="course-slider-toggle" type="button" data-toggle aria-pressed="false" aria-label="Pause slideshow">
+        <span class="course-slider-icon course-slider-icon-pause">
+          <Icon name="bi:pause" />
+        </span>
+        <span class="course-slider-icon course-slider-icon-play">
+          <Icon name="bi:play-fill" />
+        </span>
+      </button>
+    </div>
+    <p class="visually-hidden" data-status aria-live="polite">
+      A finely prepared opening dish on a phoenix-patterned plate. Photograph 1 of 10.
+    </p>
+  </div>
 
-    if (!prefersReducedMotion) {
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll, { passive: true });
-      updateParallax();
-    }
-  </script>
   <div class="course-price reveal">
     <p class="course-price-note">The dishes shown are examples of what may be included in the course.</p>
     <p class="course-price-amount">
@@ -115,9 +155,148 @@ const dishes = [
   </div>
   <div class="course-reserve reveal">
     <p class="course-reserve-text">Reservations required</p>
-    <a class="course-reserve-link btn" href="https://savorjapan.com/0031595716" target="_blank">Reserve</a>
+    <div class="course-reserve-links">
+      {
+        reservationLinks.map((link) => (
+          <a class="course-reserve-link btn" href={link.href} target="_blank" rel="noopener noreferrer">
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
   </div>
 </section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-course-slider]');
+
+  if (root) {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const viewport = root.querySelector<HTMLElement>('[data-viewport]');
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('[data-slide]'));
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+    const count = root.querySelector<HTMLElement>('[data-count]');
+    const status = root.querySelector<HTMLElement>('[data-status]');
+    const toggle = root.querySelector<HTMLButtonElement>('[data-toggle]');
+    const total = slides.length;
+    let index = 0;
+    let timer = 0;
+    let userPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let pointerId = -1;
+    let originX = 0;
+    let originY = 0;
+    let axis: 'x' | 'y' | null = null;
+
+    const pad = (value: number) => String(value).padStart(2, '0');
+
+    const renderToggle = () => {
+      if (!toggle) return;
+      toggle.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+      toggle.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
+    };
+
+    const go = (nextIndex: number) => {
+      if (!track || total === 0) return;
+      index = (nextIndex + total) % total;
+      track.style.transform = `translate3d(${index * -100}%, 0, 0)`;
+      slides.forEach((slide, slideIndex) => {
+        slide.setAttribute('aria-hidden', slideIndex === index ? 'false' : 'true');
+      });
+      dots.forEach((dot, dotIndex) => {
+        if (dotIndex === index) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+      if (count) count.textContent = `${pad(index + 1)} / ${pad(total)}`;
+      const alt = slides[index]?.dataset.alt ?? '';
+      if (status) status.textContent = `${alt}. Photograph ${index + 1} of ${total}.`;
+    };
+
+    const stop = () => window.clearInterval(timer);
+
+    const start = () => {
+      stop();
+      if (userPaused || total < 2) return;
+      timer = window.setInterval(() => go(index + 1), 5500);
+    };
+
+    root.querySelector('[data-prev]')?.addEventListener('click', () => {
+      go(index - 1);
+      start();
+    });
+    root.querySelector('[data-next]')?.addEventListener('click', () => {
+      go(index + 1);
+      start();
+    });
+    dots.forEach((dot, dotIndex) => {
+      dot.addEventListener('click', () => {
+        go(dotIndex);
+        start();
+      });
+    });
+
+    toggle?.addEventListener('click', () => {
+      userPaused = !userPaused;
+      renderToggle();
+      userPaused ? stop() : start();
+    });
+
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        go(index - 1);
+        start();
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        go(index + 1);
+        start();
+      }
+    });
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', (event) => {
+      if (!root.contains(event.relatedTarget as Node | null)) start();
+    });
+
+    viewport?.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      pointerId = event.pointerId;
+      originX = event.clientX;
+      originY = event.clientY;
+      axis = null;
+    });
+
+    viewport?.addEventListener('pointermove', (event) => {
+      if (event.pointerId !== pointerId || axis) return;
+      const deltaX = event.clientX - originX;
+      const deltaY = event.clientY - originY;
+      if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) return;
+      axis = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+      if (axis === 'x') viewport.setPointerCapture(event.pointerId);
+    });
+
+    const endSwipe = (event: PointerEvent) => {
+      if (event.pointerId !== pointerId) return;
+      if (axis === 'x') {
+        const deltaX = event.clientX - originX;
+        if (deltaX <= -48) go(index + 1);
+        else if (deltaX >= 48) go(index - 1);
+        start();
+      }
+      pointerId = -1;
+      axis = null;
+    };
+
+    viewport?.addEventListener('pointerup', endSwipe);
+    viewport?.addEventListener('pointercancel', endSwipe);
+
+    renderToggle();
+    go(0);
+    start();
+  }
+</script>
 
 <style lang="scss">
   @use '../styles/variables' as *;
@@ -145,36 +324,187 @@ const dishes = [
     line-height: 2;
     text-wrap: pretty;
   }
-  .course-gallery {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
+  .course-menu {
+    counter-reset: course;
+    display: flex;
+    flex-direction: column;
     margin-top: 48px;
   }
-  .course-gallery-item {
+  .course-menu-item {
+    counter-increment: course;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:last-child {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+  .course-menu-name {
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+
+    &::before {
+      content: counter(course, decimal-leading-zero);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+  .course-menu-desc {
+    margin-top: 8px;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 2;
+    text-wrap: pretty;
+  }
+  .course-slider {
+    max-width: 960px;
+    margin: 56px auto 0;
+    outline: none;
+
+    &:focus-visible {
+      outline: 1px solid rgba(255, 255, 255, 0.7);
+      outline-offset: 6px;
+    }
+  }
+  .course-slider-viewport {
+    position: relative;
     overflow: hidden;
-    opacity: 0;
-    transform: translateY(48px);
-    transition:
-      opacity 0.8s ease,
-      transform 0.8s ease;
+    touch-action: pan-y;
   }
-  .course-gallery-item.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+  .course-slider-track {
+    display: flex;
+    transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
-  .course-gallery-img {
+  .course-slider-slide {
+    flex: 0 0 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+  .course-slider-img {
     display: block;
     width: 100%;
     height: 100%;
-    aspect-ratio: 1 / 1;
     object-fit: cover;
-    transform: scale(1.12);
-    will-change: transform;
-    transition: filter 0.4s ease;
+    pointer-events: none;
+    user-select: none;
   }
-  .course-gallery-item:hover .course-gallery-img {
-    filter: brightness(1.15);
+  .course-slider-btn {
+    position: absolute;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    background-color: rgba(17, 17, 17, 0.45);
+    color: #ffffff;
+    transform: translateY(-50%);
+    transition:
+      background-color 0.25s,
+      color 0.25s;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background-color: #ffffff;
+      color: #111111;
+    }
+  }
+  .course-slider-btn-prev {
+    left: 16px;
+  }
+  .course-slider-btn-next {
+    right: 16px;
+  }
+  .course-slider-controls {
+    display: grid;
+    grid-template-columns: 72px 1fr 44px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .course-slider-count {
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .course-slider-dots {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .course-slider-dot {
+    width: 8px;
+    height: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    background-color: transparent;
+    transition:
+      background-color 0.25s,
+      transform 0.25s;
+
+    &[aria-current='true'] {
+      background-color: #ffffff;
+      transform: scale(1.15);
+    }
+  }
+  .course-slider-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    transition:
+      background-color 0.25s,
+      color 0.25s;
+
+    &:hover {
+      background-color: #ffffff;
+      color: #111111;
+    }
+  }
+  .course-slider-icon {
+    display: inline-flex;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  .course-slider-icon-play {
+    display: none;
+  }
+  .course-slider-toggle[aria-pressed='true'] {
+    .course-slider-icon-pause {
+      display: none;
+    }
+    .course-slider-icon-play {
+      display: inline-flex;
+    }
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
   .course-price {
     max-width: 720px;
@@ -206,6 +536,12 @@ const dishes = [
   .course-reserve-text {
     letter-spacing: 0.1em;
   }
+  .course-reserve-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
   .btn {
     display: inline-flex;
     align-items: center;
@@ -225,25 +561,36 @@ const dishes = [
       transform: translateY(-2px);
     }
   }
-  @include tab {
-    .course-gallery {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
   @include sp {
-    .course-gallery {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
+    .course-body {
+      padding-top: 24px;
+    }
+    .course-lead {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .course-menu {
+      margin-top: 32px;
+    }
+    .course-slider-btn {
+      width: 36px;
+      height: 36px;
+    }
+    .course-slider-btn-prev {
+      left: 8px;
+    }
+    .course-slider-btn-next {
+      right: 8px;
+    }
+    .course-reserve-links {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .course-gallery-item {
-      opacity: 1;
-      transform: none;
+    .course-slider-track {
       transition: none;
-    }
-    .course-gallery-img {
-      transform: none;
     }
   }
 </style>
